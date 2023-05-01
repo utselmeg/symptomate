@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Potential Disease Diagnosis</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='recommendations.css') }}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+	<link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+</head>
+<body>
+	{% include 'header.html' %}
+	<div class="container">
+        <h1>You May Have These Conditions</h1>
+        {% if recommendations %}
+            {% for recommendation in recommendations %}
+            <div class="search-result">
+                <h2>{{ recommendation.title }}</h2>
+                <h3>{{ recommendation.description }}</h3>
+                
+				{% if recommendation.severity > 6 %}
+					<p style="color:red;">Your symptoms are worrying. Consider consulting a professional or going to the hospital.</p>
+				{% else %}
+					<p style="color:green;">Things may not feel the best right now but you're fine! If symptoms persist, consider consulting a 
+						professional. Feel better soon!
+					</p>
+				{% endif %}
+
+				<div class="precautions-container precautions-wrapper">
+					<h3>Here are the next steps you can take:</h3>
+					<ul class="tips">
+					{% for precaution in recommendation.precautions %}
+						<li>{{ precaution }}</li>
+					{% endfor %}
+					</ul>
+				</div>
+				<div class="external-resources-container precautions-wrapper">
+					<h3>Here are some resources you can look into:</h3>
+					<!-- <div id="results-{{ loop.index }}"></div> -->
+					<div id="link-container"></div>
+				</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No recommendations found.</p>
+        {% endif %}
+			
+		<button onclick="window.location.href='{{ url_for('index') }}'">Back to Search</button>
+	</div>
+	<script>
+		window.onload = function () {
+			{% for recommendation in recommendations %}
+			generateLinks("{{ recommendation.links }}");
+			{% endfor %}
+		};
+		function generateLinks(urls) {
+			// const urls = 'Hyperthyroidism Overview: https://www.mayoclinic.org/diseases-conditions/hyperthyroidism/symptoms-causes/syc-20373659\nHyperthyroidism Treatment: https://www.endocrineweb.com/conditions/hyperthyroidism/hyperthyroidism-treatment-overview';
+			console.log(urls)
+			const linkList = urls.split('\t').map(url => {
+				const [text, link] = url.split(': ');
+				console.log(`<li><a href="${link}">${text}</a></li>`)
+				return `<li><a href="${link}">${text}</a></li>`;
+			}).join('');
+
+			const linkContainer = document.getElementById('link-container');
+			linkContainer.innerHTML = `<ul class="resource-link">${linkList}</ul>`;
+		}
+	</script>
+</body>
+</html>

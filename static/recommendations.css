@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap');
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2E8B57;
+    padding: 20px 30px;
+    padding: 0;
+    height: 77px;
+}
+.menu-logo {
+    width: 180px;
+}
+.menu-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu-items a {
+    color: #FFF;
+    text-decoration: none;
+    margin: 0 20px;
+    font-family: 'Dongle', sans-serif;
+    font-size: 25px;
+}
+.menu-items a:hover {
+    color: #3CB371;
+}
+body {
+    font-family: 'Dongle', sans-serif;
+}
+.container {
+    background-color: #F5F5F5;
+    font-family: 'Dongle', sans-serif;
+    text-align: center;
+    padding: 50px;
+    border-radius: 50px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 60%;
+    margin: auto;
+    margin-top: 70px;
+    position: relative;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+h1 {
+    font-size: 48px;
+    color: #2E8B57;
+    margin-bottom: 10px;
+    margin-top: 3px;
+}
+.search-result {
+    font-family: 'Dongle', sans-serif;
+    background-color: #FFF;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+h3 {
+    font-family: 'Dongle', sans-serif;
+    font-size: 24px;
+    color: #2E8B57;
+    margin-bottom: 0px;
+    margin-top: 2px;
+}
+h2 {
+    font-family: 'Dongle', sans-serif;
+    font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+p {
+    font-family: 'Dongle', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+button {
+    font-family: 'Dongle', sans-serif;
+    background-color: #2E8B57;
+    font-size: 16px;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+button:hover {
+    background-color: #1E7B47;
+}
+.precautions-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+}
+.resource-link {
+    list-style-type: "🏥";
+    font-family: 'Dongle', sans-serif;
+    font-size: 20px;
+    color: #333;
+    margin-top: 1px;
+    padding-left: 40px;
+    margin-right: 50px;
+}
+.tips {
+    list-style-type: "\1F44D";
+    padding-left: 40px;
+    margin-top: 1px;
+}
+.search-result li {
+    font-family: 'Dongle', sans-serif;
+    font-size: 20px;
+    color: #333;
+    padding-left: 10px;
+}

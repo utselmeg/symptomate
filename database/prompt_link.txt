@@ -1,0 +1,1 @@
+Give me some only 2 main links and no any other words at all in your response about {0} in such format: 1.text: link\n2.text: link.

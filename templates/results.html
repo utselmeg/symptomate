@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Do you have the following symptoms?</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+	<link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+</head>
+<body>
+	{% include 'header.html' %}
+	<div class="container">
+		<div class="back-button">
+			<a href="{{ url_for('index') }}" class="button">
+				<button type="button" class="button">Go Back</button>
+			</a>
+		{% if related_searches == [] %}
+		<h1>Oops, it looks like we didn't quite catch that:(</h1>
+		<h2>Please try asking again or using the cards below the search bar. We're here to help you!:)</h2>
+		{% else %}
+			</div>
+
+			<h1>Do you have the following symptoms?</h1>
+			<h2>Click on the symptoms that apply:</h2>
+			<form method="post" action="{{ url_for('recommend') }}">
+				<div class="card-container">
+
+					{% for search in related_searches %}
+						<label class="card" for="{{ search.keyword }}" data-description="{{ search.description }}">
+							<input type="checkbox" name="related_search" id="{{ search.keyword }}" value="{{ search.keyword }}" hidden>
+							{{ search.keyword }}
+						</label>
+					{% endfor %}
+				</div>
+				<button type="submit">Show Results</button>
+			</form>
+		</div>
+		{% endif %}
+	<script>
+		const cards = document.querySelectorAll('.card');
+		cards.forEach(card => {
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            card.addEventListener('click', () => {
+                checkbox.checked = !checkbox.checked;
+                if (checkbox.checked) {
+                    card.classList.add('checked');
+                } else {
+                    card.classList.remove('checked');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

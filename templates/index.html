@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SymptoMate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+	<link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap');
+		.menu {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #2E8B57;
+			padding: 20px 30px;
+		}
+		.menu-logo {
+			width: 180px;
+		}
+		.menu-items {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.menu-items a {
+			color: #FFF;
+			text-decoration: none;
+			margin: 0 20px;
+			font-family: 'Dongle', sans-serif;
+			font-size: 25px;
+		}
+		.menu-items a:hover {
+			color: #3CB371;
+		}
+		.title {
+			margin-top: 50px;
+		}
+		h1 {
+			font-family: 'Dongle', sans-serif;
+			font-size: 100px;
+			color: #2E8B57;
+			text-align: center;
+			margin-bottom: 0;
+		}
+		h2 {
+			font-family: 'Dongle', sans-serif;
+			font-size: 30px;
+			color: #2E8B57;
+			text-align: center;
+			margin-top: -20px;
+		}
+		.container {
+			background-color: #6bdb9c;
+			font-family: 'Dongle', sans-serif;
+			text-align: center;
+			padding: 30px;
+			border-radius: 70px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+			max-width: 500px;
+			margin: auto;
+			margin-top: 60px;
+			position: relative;
+		}
+		label {
+			display: block;
+			font-size: 30px;
+			color: #2E8B57;
+			margin-bottom: 30px;
+			position: relative;
+		}
+		input[type=text] {
+			padding: 10px;
+			font-size: 20px;
+			border: none;
+			border-radius: 30px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+			width: 100%;
+			margin: 0 auto;
+			display: block;
+			resize: vertical;
+			overflow: auto;
+			margin-bottom: -20px;
+			position: relative;
+			background-color: #f1f1f1;
+			font-size: 25px;
+			background-image: url("{{ url_for('static', filename='steth.png') }}");
+			background-repeat: no-repeat;
+			background-position: 7px 50%;
+			background-size: 40px;
+			padding-left: 50px;
+		}
+		input[type=text]:focus {
+			outline: none;
+			box-shadow: 0 0 5px #2E8B57;
+		}
+		button[type=submit] {
+			margin-left: 10px;
+			font-family: 'Dongle', sans-serif;
+			background-color: #2E8B57;
+			color: #FFF;
+			padding: 0px 10px;
+			font-size: 40px;
+			border: none;
+			border-radius: 20px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+			cursor: pointer;
+			transition: transform 0.3s;
+		}
+		button[type=submit]:hover {
+			background-color: #3CB371;
+			transform: scale(1.1);
+		}
+		* { 
+			box-sizing: border-box; 
+		}
+		body {
+			font: 16px Arial;
+			background-color: #88EEB9;
+		}
+		.rob-image {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			width: 170px;
+			height: 190px;
+			background-image: url("{{ url_for('static', filename='rob.png') }}");
+			background-size: cover;
+		}
+		.autocomplete {
+			position: relative;
+			display: inline-block;
+		}
+		input {
+			border: 1px solid transparent;
+			background-color: #f1f1f1;
+			padding: 5px;
+			font-size: 40px;
+			font-family: 'Dongle', sans-serif;
+		}
+		input[type="text"]::placeholder {
+			text-align: left;
+			padding-left: -1px; 
+		}
+		input[type=submit] {
+			background-color: DodgerBlue;
+			color: #fff;
+			font-family: 'Dongle', sans-serif;
+			padding-left: 50px;
+			text-align: left;
+		}
+		.autocomplete-items {
+			position: absolute;
+			font-family: 'Dongle', sans-serif;
+			border: none;
+			z-index: 99;
+			top: 100%;
+			left: 0;
+			right: 0;
+			overflow: auto;
+		}
+		.autocomplete-items div {
+			font-family: 'Dongle', sans-serif;
+			font-size: 30px;
+			padding: 10px;
+			cursor: pointer;
+			background-color: #fff;
+			border-radius: 30px;
+		}
+		.autocomplete-items div:hover {
+			background-color: #e9e9e9;
+		}
+		.autocomplete-active {
+			background-color: DodgerBlue !important;
+			color: #ffffff;
+		}
+		h4 {
+			font-family: 'Dongle', sans-serif;
+			color: #2E8B57;
+			font-size: 30px;
+			text-align: center;
+			margin-top: 10px;
+		}
+		.symptom-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-gap: 7px;
+			max-width: 420px; 
+			margin: 1px auto;
+		}
+		.symptom-grid .symptom-button {
+			font-family: 'Dongle', sans-serif;
+			font-size: 20px;
+			background-color: #2E8B57;
+			color: #FFF;
+			padding: 5px;
+			border: none;
+			border-radius: 20px;
+			cursor: pointer;
+			text-align: center;
+			display: block;
+			width: 125px; 
+			height: 42px;
+			white-space: normal; 
+			overflow: hidden;
+			text-overflow: ellipsis; 
+			line-height: 0.8;
+			transition: transform 0.3s;
+		}
+		.symptom-button:hover {
+			background-color: #3CB371;
+			transform: scale(1.1);
+		}
+		.bubble {
+			position: absolute;
+			display: none;
+			background-color: #f9f9f9;
+			color: #333;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			font-size: 15px;
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 160px;
+			max-width: calc(100vw - 20px);
+			white-space: normal; 
+			word-wrap: break-word;
+			font-family: 'Dongle', sans-serif;
+			color: #2E8B57;
+			text-align: center;
+			margin-top: 10px;
+		}
+		.bubble::after {
+			content: '';
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			border-width: 10px;
+			border-style: solid;
+			border-color: #f9f9f9 transparent transparent transparent;
+		}
+	</style>
+</head>
+<body>
+	{% include 'header.html' %}
+
+	<div class="title">
+		<h1>SymptoMate™</h1>
+		<h2>Your friendly robofriend for all things health ☺</h2>
+	</div>
+    <div class="container">
+		<form autocomplete="off" method="post" action="{{ url_for('search') }}">
+			<div class="autocomplete" style="width:300px;">
+				<label for="user_input">
+					<input type="text" id="user_input" name="user_input" placeholder="How are you feeling today?">
+				</label>
+			</div>
+			<button type="submit">Search</button>
+		</form>
+    </div>
+	<h4>Or try one of these:</h4>
+	<div class="symptom-grid">
+		{% for symptom in random_sample %}
+			<form method="post" action="{{ url_for('search') }}">
+				<input type="hidden" name="user_input" value="{{ symptom }}">
+				<button type="submit" class="symptom-button">{{ symptom }}</button>
+			</form>
+		{% endfor %}
+	</div>
+
+	<div class="rob-image">
+		<div class="bubble" id="bubble"><p>Tip: Start by typing how you're feeling. Example: <em>"I've been having headaches for a while now, and they're getting worse..."</em></p></div>
+	</div>
+ 
+    <script> 
+		function submit_symptom(symptom) {
+			document.getElementById('user_input').value = symptom;
+			document.querySelector('form').submit();
+		}
+        function autocomplete(inp, arr) {
+            var currentFocus;
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                closeAllLists();
+
+                if (!val) { 
+					return false;
+				}
+
+                currentFocus = -1;
+
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+
+                this.parentNode.appendChild(a);
+
+                for (i = 0; i < arr.length; i++) {
+                  	if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+						b = document.createElement("DIV");
+						b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+						b.innerHTML += arr[i].substr(val.length);
+						b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+							b.addEventListener("click", function(e) {
+								inp.value = this.getElementsByTagName("input")[0].value;
+								closeAllLists();
+								});
+						a.appendChild(b);
+                  	}
+                }
+            });
+
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+					currentFocus++;
+					addActive(x);
+                } 
+				else if (e.keyCode == 38) {
+                  	currentFocus--;
+                  	addActive(x);
+                } 
+				else if (e.keyCode == 13) {
+					e.preventDefault();
+					if (currentFocus > -1) {
+                    	if (x) x[currentFocus].click();
+                  	}
+                }
+            });
+
+            function addActive(x) {
+				if (!x) return false;
+
+				removeActive(x);
+				if (currentFocus >= x.length) currentFocus = 0;
+				if (currentFocus < 0) currentFocus = (x.length - 1);
+
+				x[currentFocus].classList.add("autocomplete-active");
+            }
+
+            function removeActive(x) {
+              	for (var i = 0; i < x.length; i++) {
+                	x[i].classList.remove("autocomplete-active");
+              	}
+            }
+
+            function closeAllLists(elmnt) {
+				var x = document.getElementsByClassName("autocomplete-items");
+				for (var i = 0; i < x.length; i++) {
+					if (elmnt != x[i] && elmnt != inp) {
+						x[i].parentNode.removeChild(x[i]);
+					}
+				}
+          	}
+          	document.addEventListener("click", function (e) {
+              	closeAllLists(e.target);
+          	});
+        }
+		var symptoms = [
+		'patches in throat', 'fatigue', 'back pain', 'pain during bowel movements', 'nausea',
+		'pain in anal region', 'watering from eyes', 'dark urine', 'passage of gases', 'family history',
+		'lack of concentration', 'painful walking', 'malaise', 'fast heart rate', 'pain behind the eyes',
+		'palpitations', 'abdominal pain', 'obesity', 'abnormal menstruation', 'acidity', 'scurring',
+		'acute liver failure', 'weight loss', 'headache', 'weakness in limbs', 'yellowish skin',
+		'weight gain', 'neck pain', 'restlessness', 'dehydration', 'weakness of one body side',
+		'lethargy', 'red sore around nose', 'yellowing of eyes', 'yellow crust ooze', 'depression',
+		'yellow urine', 'red spots over body', 'belly pain', 'receiving blood transfusion',
+		'redness of eyes', 'receiving unsterile injections', 'shivering', 'chest pain', 'chills',
+		'phlegm', 'throat irritation', 'high fever', 'dizziness', 'dischromic patches', 'diarrhoea',
+		'hip joint pain', 'silver like dusting', 'distention of abdomen', 'history of alcohol consumption',
+		'mild fever', 'visual disturbances', 'sinus pressure', 'skin rash', 'skin peeling',
+		'bladder discomfort', 'ulcers on tongue', 'blackheads', 'blister', 'blurred and distorted vision',
+		'altered sensorium', 'bloody stool', 'fluid overload', 'slurred speech', 'blood in sputum',
+		'small dents in nails', 'indigestion', 'anxiety', 'knee pain', 'internal itching', 'unsteadiness',
+		'inflammatory nails', 'enlarged thyroid', 'increased appetite', 'continuous sneezing', 'vomiting',
+		'cough', 'joint pain', 'constipation', 'mood swings', 'nodal skin eruptions', 'loss of appetite',
+		'cold hands and feets', 'foul smell of urine', 'loss of balance', 'movement stiffness',
+		'continuous feel of urine', 'polyuria', 'toxic look (typhos)', 'coma', 'congestion', 'loss of smell',
+		'spinning movements', 'spotting urination', 'breathlessness', 'cramps', 'bruising',
+		'irregular sugar level', 'irritation in anus', 'prominent veins on calf', 'irritability',
+		'brittle nails', 'drying and tingling lips', 'itching', 'stomach pain', 'stiff neck',
+		'stomach bleeding', 'muscle wasting', 'sunken eyes', 'muscle weakness', 'pus filled pimples',
+		'burning micturition', 'mucoid sputum', 'puffy face and eyes', 'muscle pain', 'rusty sputum',
+		'runny nose', 'sweating', 'swelling joints', 'swelling of stomach', 'swollen legs',
+		'swollen blood vessels', 'swelled lymph nodes', 'swollen extremeties', 'extra marital contacts',
+		'excessive hunger'
+	]
+		autocomplete(document.getElementById("user_input"), symptoms);
+
+		const robImage = document.querySelector('.rob-image');
+		const bubble = document.getElementById('bubble');
+	
+		robImage.addEventListener('mouseenter', () => {
+			bubble.style.display = 'block';
+		});
+	
+		robImage.addEventListener('mouseleave', () => {
+			bubble.style.display = 'none';
+		});
+    </script>
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+</body>
+</html>
